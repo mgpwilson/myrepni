@@ -4,6 +4,8 @@
   "description": "A representative finder for Northern Ireland using React.js frontend, Express.js backend and PostgresSQL database.",
   "main": "index.js",
   "scripts": {
+    "dev": "concurrently run \"npm run server\" \"npm run client\"",
+    "client": "npm start --prefix client",
     "server": "nodemon --exec babel-node server"
   },
   "repository": {
