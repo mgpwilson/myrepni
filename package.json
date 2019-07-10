@@ -1,0 +1,32 @@
+{
+  "name": "full-stack-react-app",
+  "version": "1.0.0",
+  "description": "A representative finder for Northern Ireland using React.js frontend, Express.js backend and PostgresSQL database.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgpwilson/full-stack-react-app.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mgpwilson/full-stack-react-app/issues"
+  },
+  "homepage": "https://github.com/mgpwilson/full-stack-react-app#readme",
+  "devDependencies": {
+    "concurrently": "^4.1.1",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.17.1",
+    "pg": "^7.11.0"
+  }
+}
