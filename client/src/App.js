@@ -8,11 +8,13 @@ import {
   Col,
   Jumbotron,
   Input,
-  InputGroup,
-  InputGroupAddon,
+  Form,
   Button,
-  FormGroup,
+  ListGroup,
+  ListGroupItem,
 } from 'reactstrap';
+
+import { css, cx } from 'emotion';
 
 import Person from './Person';
 
@@ -21,58 +23,46 @@ class App extends Component {
     super(props);
 
     this.state = {
-      person: null,
-      postcodeList: [],
-      newPostcode: '',
+      postcode: '',
+      constituency: null,
+      people: [],
     };
   }
 
-  getPostcodeList = () => {
-    fetch('/api/postcode')
-      .then(res => res.json())
-      .then(res => {
-        let postcodeList = res.map(r => r.code);
-        this.setState({ postcodeList });
-      });
-  };
-
   handleInputChange = e => {
-    this.setState({ newPostcode: e.target.value });
+    this.setState({ postcode: e.target.value });
   };
 
-  handleAddPostcode = () => {
-    fetch('api/postcode', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ postcode: this.state.newPostcode }),
-    })
-      .then(res => res.json())
-      .then(res => {
-        this.getPostcodeList();
-        this.setState({ newPostcode: '' });
-      });
+  handleSubmit = e => {
+    e.preventDefault();
+    this.getConstituency(this.state.postcode);
   };
 
-  getPerson = postcode => {
+  getConstituency = postcode => {
     fetch(`/api/constituency/${postcode}`)
       .then(res => res.json())
-      .then(person => {
-        console.log(person);
-        this.setState({ person });
+      .then(res => res.name)
+      .then(constituency => {
+        console.log(constituency);
+        this.setState({ constituency });
+        this.getPeople(constituency);
       });
   };
 
-  handleChangePostcode = e => {
-    this.getPerson(e.target.value);
+  getPeople = constituency => {
+    fetch(`/api/person/${constituency}`)
+      .then(res => res.json())
+      .then(people => {
+        this.setState({ people });
+        console.log(people);
+      });
   };
 
-  componentDidMount() {
-    this.getPostcodeList();
-  }
+  componentDidMount() {}
 
   render() {
     return (
-      <Container fluid className="centered">
+      <Container fluid className="text-center">
         <Navbar dark color="dark">
           <NavbarBrand href="/">MyRepNI</NavbarBrand>
         </Navbar>
@@ -81,40 +71,47 @@ class App extends Component {
             <Jumbotron>
               <h1 className="display-3">MyRepNI</h1>
               <p className="lead">Enter your postcode</p>
-              <InputGroup>
+              <Form onSubmit={this.handleSubmit}>
                 <Input
-                  className="centered"
-                  value={this.state.newPostcode}
+                  className="text-center mb-3"
+                  value={this.state.postcode}
                   onChange={this.handleInputChange}
                 />
-                <InputGroupAddon addonType="append">
-                  <Button color="primary" onClick={this.handleAddPostcode}>
-                    Submit
-                  </Button>
-                </InputGroupAddon>
-              </InputGroup>
+                <Button color="primary">Submit</Button>
+              </Form>
             </Jumbotron>
           </Col>
         </Row>
         <Row>
           <Col>
-            <h1 className="display-5">Current Postcode</h1>
-            <FormGroup>
-              <Input type="select" onChange={this.handleChangePostcode}>
-                {this.state.postcodeList.length === 0 && (
-                  <option>No postcodes added yet.</option>
-                )}
-                {this.state.postcodeList.length > 0 && (
-                  <option>Select a postcode.</option>
-                )}
-                {this.state.postcodeList.map((postcode, i) => (
-                  <option key={i}>{postcode}</option>
-                ))}
-              </Input>
-            </FormGroup>
+            <ListGroup>
+              {this.state.people.map((person, index) => {
+                return (
+                  <ListGroupItem key={`${person.forename}_${person.surname}`}>
+                    {person.forename} {person.surname} {person.position} {'- '}
+                    {person.party_name}
+                  </ListGroupItem>
+                );
+              })}
+            </ListGroup>
           </Col>
         </Row>
-        <Person />
+        <div
+          className={css`
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+          `}
+        >
+          {this.state.people.map((person, index) => {
+            return (
+              <Person
+                key={`${person.forename}_${person.surname}`}
+                person={person}
+              />
+            );
+          })}
+        </div>
       </Container>
     );
   }

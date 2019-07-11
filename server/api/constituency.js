@@ -10,7 +10,7 @@ router.get('/:postcode', function(req, res) {
     if (err) {
       return res.json(err);
     }
-    return res.json(constituency);
+    return res.json(constituency).guardian_name;
   });
 });
 

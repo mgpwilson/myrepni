@@ -15,6 +15,7 @@ app.use(_json());
 
 app.use('/api/postcode', require('./api/postcode'));
 app.use('/api/constituency', require('./api/constituency'));
+app.use('/api/person', require('./api/person'));
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
