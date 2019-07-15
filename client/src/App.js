@@ -10,8 +10,6 @@ import {
   Input,
   Form,
   Button,
-  ListGroup,
-  ListGroupItem,
 } from 'reactstrap';
 
 import { css, cx } from 'emotion';
@@ -26,6 +24,7 @@ class App extends Component {
       postcode: '',
       constituency: null,
       people: [],
+      resultsVisible: 'hidden',
     };
   }
 
@@ -43,7 +42,6 @@ class App extends Component {
       .then(res => res.json())
       .then(res => res.name)
       .then(constituency => {
-        console.log(constituency);
         this.setState({ constituency });
         this.getPeople(constituency);
       });
@@ -54,7 +52,7 @@ class App extends Component {
       .then(res => res.json())
       .then(people => {
         this.setState({ people });
-        console.log(people);
+        this.setState({ resultsVisible: 'visible' });
       });
   };
 
@@ -82,35 +80,107 @@ class App extends Component {
             </Jumbotron>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <ListGroup>
-              {this.state.people.map((person, index) => {
-                return (
-                  <ListGroupItem key={`${person.forename}_${person.surname}`}>
-                    {person.forename} {person.surname} {person.position} {'- '}
-                    {person.party_name}
-                  </ListGroupItem>
-                );
-              })}
-            </ListGroup>
-          </Col>
-        </Row>
+
         <div
           className={css`
-            display: flex;
-            flex-flow: row wrap;
+            display: grid;
             justify-content: center;
+            visibility: ${this.state.resultsVisible};
           `}
         >
-          {this.state.people.map((person, index) => {
-            return (
-              <Person
-                key={`${person.forename}_${person.surname}`}
-                person={person}
-              />
-            );
-          })}
+          <h1
+            className={css`
+              grid-row: auto;
+              margin-top: 20px;
+            `}
+          >
+            Your constituency is {this.state.constituency}
+          </h1>
+          <h2
+            className={css`
+              grid-row: auto;
+              margin-top: 20px;
+            `}
+          >
+            Your MP
+          </h2>
+          <div
+            className={css`
+              grid-row: auto;
+              display: flex;
+              justify-content: center;
+            `}
+          >
+            {this.state.people.map(person => {
+              if (person.position === 'MP') {
+                console.log(person);
+                return (
+                  <Person
+                    key={`${person.forename}_${person.surname}`}
+                    person={person}
+                  />
+                );
+              }
+            })}
+          </div>
+
+          <h2
+            className={css`
+              grid-row: auto;
+              margin-top: 40px;
+            `}
+          >
+            Your MLAs
+          </h2>
+          <div
+            className={css`
+              grid-row: auto;
+              display: flex;
+              flex-flow: row wrap;
+              justify-content: center;
+            `}
+          >
+            {this.state.people.map(person => {
+              if (person.position === 'MLA') {
+                console.log(person);
+                return (
+                  <Person
+                    key={`${person.forename}_${person.surname}`}
+                    person={person}
+                  />
+                );
+              }
+            })}
+          </div>
+
+          <h2
+            className={css`
+              grid-row: auto;
+              margin-top: 40px;
+            `}
+          >
+            Your MEPs
+          </h2>
+          <div
+            className={css`
+              grid-row: auto;
+              display: flex;
+              flex-flow: row wrap;
+              justify-content: center;
+            `}
+          >
+            {this.state.people.map(person => {
+              if (person.position === 'MEP') {
+                console.log(person);
+                return (
+                  <Person
+                    key={`${person.forename}_${person.surname}`}
+                    person={person}
+                  />
+                );
+              }
+            })}
+          </div>
         </div>
       </Container>
     );

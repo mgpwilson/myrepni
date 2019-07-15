@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
-import { css, cx } from 'emotion';
+import React from 'react';
+import { css } from 'emotion';
 
 const Person = person => {
   const p = person.person;
-  console.log(p);
+
+  if (p.image_url === null) {
+    p.image_url = 'http://placehold.jp/260x260.png';
+  }
 
   return (
     <div
       className={css`
         display: grid;
-        grid-template-columns: 260px 260px;
+        grid-template-columns: auto 260px;
         margin: 10px;
-        width: 520px;
         align-items: center;
-        background-color: #ff4136;
+        background-color: ${p.party_color};
         border-top-left-radius: 11px;
         border-bottom-left-radius: 11px;
         border-top-right-radius: 10px;
@@ -25,10 +27,9 @@ const Person = person => {
           grid-column: 1;
           border-top-left-radius: 10px;
           border-bottom-left-radius: 10px;
-          width: 260px;
           height: 260px;
         `}
-        src="http://placehold.jp/260x260.png"
+        src={p.image_url}
         alt={`${p.forename} ${p.surname}`}
       />
       <div
@@ -37,6 +38,8 @@ const Person = person => {
           border-top-right-radius: 10px;
           border-bottom-right-radius: 10px;
           color: white;
+          padding-left: 10px;
+          padding-right: 10px;
         `}
       >
         <h4>
@@ -45,17 +48,14 @@ const Person = person => {
         <h6>
           {p.party_name} <br /> {p.position} for {p.constituency_name}
         </h6>
-        <a
-          className={css`
-            color: white;
-            :hover {
-              color: white;
-            }
-          `}
-          href="#"
-        >
-          Contact
-        </a>
+        <details>
+          <summary>Contact</summary>
+          <p>
+            {p.phone_number}
+            <br />
+            {p.email_address}
+          </p>
+        </details>
       </div>
     </div>
   );

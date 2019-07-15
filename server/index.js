@@ -13,7 +13,6 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(_json());
 
-app.use('/api/postcode', require('./api/postcode'));
 app.use('/api/constituency', require('./api/constituency'));
 app.use('/api/person', require('./api/person'));
 
