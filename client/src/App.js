@@ -12,7 +12,7 @@ import {
   Button,
 } from 'reactstrap';
 
-import { css, cx } from 'emotion';
+import { css } from 'emotion';
 
 import Person from './Person';
 
@@ -24,6 +24,7 @@ class App extends Component {
       postcode: '',
       constituency: null,
       people: [],
+      alertVisible: 'hidden',
       resultsVisible: 'hidden',
     };
   }
@@ -34,13 +35,20 @@ class App extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.getConstituency(this.state.postcode);
+    this.setState({ alertVisible: 'hidden' });
+    let postcodeRegEx = /[bB][tT][0-9]{1,2} ?[0-9][a-zA-Z]{2}/g;
+    if (postcodeRegEx.test(this.state.postcode)) {
+      this.getConstituency(this.state.postcode);
+    } else this.setState({ alertVisible: 'visible' });
   };
 
   getConstituency = postcode => {
     fetch(`/api/constituency/${postcode}`)
       .then(res => res.json())
-      .then(res => res.name)
+      .then(res => {
+        console.log(res);
+        return res.name;
+      })
       .then(constituency => {
         this.setState({ constituency });
         this.getPeople(constituency);
@@ -68,6 +76,14 @@ class App extends Component {
           <Col>
             <Jumbotron>
               <h1 className="display-3">MyRepNI</h1>
+              <div
+                className={`alert alert-danger ${css`
+                  visibility: ${this.state.alertVisible};
+                `}`}
+                role="alert"
+              >
+                Please enter a valid Northern Irish postcode.
+              </div>
               <p className="lead">Enter your postcode</p>
               <Form onSubmit={this.handleSubmit}>
                 <Input
@@ -81,6 +97,7 @@ class App extends Component {
           </Col>
         </Row>
 
+        {/* Display results container */}
         <div
           className={css`
             display: grid;
@@ -102,7 +119,7 @@ class App extends Component {
               margin-top: 20px;
             `}
           >
-            Your MP
+            Your Member of the United Kingdom Parliament
           </h2>
           <div
             className={css`
@@ -113,7 +130,6 @@ class App extends Component {
           >
             {this.state.people.map(person => {
               if (person.position === 'MP') {
-                console.log(person);
                 return (
                   <Person
                     key={`${person.forename}_${person.surname}`}
@@ -130,7 +146,7 @@ class App extends Component {
               margin-top: 40px;
             `}
           >
-            Your MLAs
+            Your Members of the Northern Irish Assembly
           </h2>
           <div
             className={css`
@@ -142,7 +158,6 @@ class App extends Component {
           >
             {this.state.people.map(person => {
               if (person.position === 'MLA') {
-                console.log(person);
                 return (
                   <Person
                     key={`${person.forename}_${person.surname}`}
@@ -159,7 +174,7 @@ class App extends Component {
               margin-top: 40px;
             `}
           >
-            Your MEPs
+            Your Members of the European Parliament
           </h2>
           <div
             className={css`
@@ -171,7 +186,6 @@ class App extends Component {
           >
             {this.state.people.map(person => {
               if (person.position === 'MEP') {
-                console.log(person);
                 return (
                   <Person
                     key={`${person.forename}_${person.surname}`}
