@@ -16,6 +16,7 @@ class App extends Component {
       constituency: null,
       people: [],
       alertVisible: false,
+      alertMessage: '',
       resultsVisible: false,
       loaderVisible: false,
     };
@@ -35,7 +36,7 @@ class App extends Component {
     if (postcodeRegEx.test(this.state.postcode)) {
       this.setState({ loaderVisible: true });
       this.getConstituency(this.state.postcode);
-    } else this.setState({ alertVisible: true });
+    } else this.showError('Please enter a valid Northern Ireland postcode');
   };
 
   handleScrollToResults = e => {
@@ -44,6 +45,12 @@ class App extends Component {
       top: this.scrollRef.current.offsetTop,
       behavior: 'smooth',
     });
+  };
+
+  showError = message => {
+    this.setState({ alertVisible: true });
+    this.setState({ alertMessage: message });
+    this.setState({ loaderVisible: false });
   };
 
   getConstituency = postcode => {
@@ -58,7 +65,9 @@ class App extends Component {
         this.setState({ constituency });
         this.getPeople(constituency);
       })
-      .catch(error => console.log(error));
+      .catch(error =>
+        this.showError('Postcode is either inactive or does not exist.')
+      );
   };
 
   getPeople = constituency => {
@@ -104,6 +113,7 @@ class App extends Component {
             className={css`
               font-size: 3rem;
               margin: 1rem 0;
+              color: #0288d1;
             `}
           >
             MyRepNI
@@ -118,7 +128,7 @@ class App extends Component {
                 margin: 0 0 1rem 0;
               `}
             >
-              Please enter a valid Northern Irish postcode.
+              {this.state.alertMessage}
             </div>
           )}
           <p
