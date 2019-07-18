@@ -1,17 +1,36 @@
 import express from 'express';
 import Constituency from '../models/constituency';
+import request from 'request-promise';
 
 const router = express.Router();
 
-router.get('/:postcode', function(req, res) {
+router.get('/:postcode', (req, res) => {
   const postcode = req.params.postcode;
 
-  Constituency.retrieveByPostcode(postcode, function(err, constituency) {
+  // console.log('gpt here');
+
+  // request({
+  //   uri: `https://api.parliament.uk/query/constituency_lookup_by_postcode.json?postcode=${postcode}`,
+  //   json: true,
+  // }).then(resp => {
+  //   console.log(resp);
+  // });
+
+  // Constituency.retrieveByPostcode(postcode, function(err, constituency) {
+  //   if (err) {
+  //     return res.json(err);
+  //   }
+  //   return res.json(constituency);
+  // });
+
+  Constituency.retrieveByPostcode(postcode, (err, constituency) => {
     if (err) {
       return res.json(err);
     }
-    return res.json(constituency).guardian_name;
+    return res.json(constituency);
   });
+
+  // Constituency.retrieveByPostcode
 });
 
 module.exports = router;

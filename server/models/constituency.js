@@ -1,13 +1,11 @@
 import request from 'request-promise';
 
-const API_KEY = process.env.API_KEY;
-
 class Constituency {
   static retrieveByPostcode(postcode, callback) {
     request({
-      uri: `https://www.theyworkforyou.com/api/getConstituency?key=${API_KEY}&postcode=${postcode}&output=js`,
+      uri: `https://api.parliament.uk/query/constituency_lookup_by_postcode.json?postcode=${postcode}`,
       json: true,
-    }).then(function(res) {
+    }).then(res => {
       callback(res);
     });
   }
