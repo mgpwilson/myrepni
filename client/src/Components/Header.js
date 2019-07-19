@@ -1,33 +1,40 @@
 import React from 'react';
 import { css } from 'emotion';
 
-import logo from '../img/logo.svg';
+import Title from './Title';
+import Alert from './Alert';
+import PostcodeInput from './PostcodeInput';
+import Loader from './Loader';
 
-const Header = () => {
+const Header = props => {
+  const alertVisible = props.alertVisible,
+    alertMessage = props.alertMessage,
+    handleSubmit = props.handleSubmit,
+    handleInputChange = props.handleInputChange,
+    postcode = props.postcode,
+    loaderVisible = props.loaderVisible,
+    resultsVisible = props.resultsVisible;
+
   return (
     <div
       className={css`
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        padding-top: 3rem;
       `}
     >
-      <img
-        src={logo}
-        alt="Logo"
-        className={css`
-          width: 80%;
-          max-height: 300px;
-          object-fit: contain;
-        `}
+      <Title />
+      {alertVisible && <Alert alertMessage={alertMessage} />}
+      <PostcodeInput
+        handleSubmit={handleSubmit}
+        handleInputChange={handleInputChange}
+        postcode={postcode}
       />
-      <h1
-        className={css`
-          font-size: 3rem;
-          margin: 1rem 0;
-          color: #0288d1;
-        `}
-      >
-        MyRepNI
-      </h1>
+
+      <Loader loaderVisible={loaderVisible} resultsVisible={resultsVisible} />
     </div>
   );
 };

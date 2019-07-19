@@ -3,13 +3,10 @@ import React, { useState, useRef } from 'react';
 import { css } from 'emotion';
 
 import Header from './Header';
-import Alert from './Alert';
-import PostcodeInput from './PostcodeInput';
-import Loader from './Loader';
 import Results from './Results';
 
 const App = () => {
-  const [postcode, setPostcode] = useState('BT36 7SX'),
+  const [postcode, setPostcode] = useState(''),
     [constituency, setConstituency] = useState(null),
     [people, setPeople] = useState([]),
     [alertVisible, setAlertVisible] = useState(false),
@@ -81,26 +78,15 @@ const App = () => {
         text-align: center;
       `}
     >
-      <div
-        className={css`
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: start;
-          height: 100vh;
-          padding-top: 3rem;
-        `}
-      >
-        <Header />
-        {alertVisible && <Alert alertMessage={alertMessage} />}
-        <PostcodeInput
-          handleSubmit={handleSubmit}
-          handleInputChange={handleInputChange}
-          postcode={postcode}
-        />
-
-        <Loader loaderVisible={loaderVisible} resultsVisible={resultsVisible} />
-      </div>
+      <Header
+        alertVisible={alertVisible}
+        alertMessage={alertMessage}
+        handleSubmit={handleSubmit}
+        handleInputChange={handleInputChange}
+        postcode={postcode}
+        loaderVisible={loaderVisible}
+        resultsVisible={resultsVisible}
+      />
 
       {/* Display results container */}
       {resultsVisible && (

@@ -82,14 +82,10 @@ const Person = props => {
           >
             Contact
           </summary>
-          <span
-            className={css`
-              margin: 0;
-            `}
-          >
-            {p.phone_number}
+          <span>
+            Phone: {p.phone_number}
             <br />
-            {p.email_address}
+            E-Mail: {p.email_address}
           </span>
         </details>
       </div>
