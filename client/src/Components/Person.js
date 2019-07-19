@@ -1,8 +1,8 @@
 import React from 'react';
 import { css } from 'emotion';
 
-const Person = person => {
-  const p = person.person;
+const Person = props => {
+  const p = props.person;
 
   if (p.image_url === null) {
     p.image_url = 'http://placehold.jp/260x260.png';

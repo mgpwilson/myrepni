@@ -1,11 +1,9 @@
 import 'dotenv/config';
-import path from 'path';
 import express, { json, urlencoded } from 'express';
 import { json as _json } from 'body-parser';
 
 import db from './database';
 
-const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 5000;
 
 const app = express();

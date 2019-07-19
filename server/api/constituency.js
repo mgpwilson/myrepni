@@ -10,12 +10,8 @@ router.get('/:postcode', (req, res) => {
     uri: `https://api.parliament.uk/query/constituency_lookup_by_postcode.json?postcode=${postcode}`,
     json: true,
   })
-    .then(data => {
-      return res.json(data);
-    })
-    .catch(err => {
-      return res.json(err);
-    });
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
 });
 
 module.exports = router;
