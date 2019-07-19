@@ -55,7 +55,10 @@ const App = () => {
         setConstituency(constituency);
         getPeople(constituency);
       })
-      .catch(() => showError('Postcode is either inactive or does not exist.'));
+      .catch(err => {
+        console.log(err);
+        showError('Postcode is either inactive or does not exist.');
+      });
   };
 
   const getPeople = constituency => {

@@ -33,6 +33,7 @@ const Results = props => {
         <span
           className={css`
             color: #03a9f4;
+            white-space: nowrap;
           `}
         >
           {constituency}
