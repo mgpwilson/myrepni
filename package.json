@@ -8,8 +8,7 @@
     "client": "npm start --prefix client",
     "server": "nodemon --exec babel-node server",
     "build": "babel server -d lib",
-    "start": "node lib",
-    "heroku-postbuild": "cd client && npm i && npm run build"
+    "start": "npm build && node lib"
   },
   "repository": {
     "type": "git",
