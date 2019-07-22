@@ -1,5 +1,5 @@
 # Production
-build.js
+lib/
 
 # Logs
 logs
