@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import path from 'path';
+import serverless from 'serverless-http';
 import express from 'express';
 import bodyParser from 'body-parser';
 
@@ -34,4 +35,4 @@ db.query('SELECT NOW()', (err, res) => {
   console.log(`PostgreSQL connected: ${res[0].now}.`);
 });
 
-export default app;
+export var handler = serverless(app);
