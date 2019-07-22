@@ -7,8 +7,7 @@
     "dev": "concurrently run \"npm run server\" \"npm run client\"",
     "client": "npm start --prefix client",
     "server": "nodemon --exec babel-node server",
-    "build": "babel-node server --out-file build.js",
-    "start": "npm run build && node build.js",
+    "start": "babel-node server",
     "heroku-postbuild": "cd client && npm i && npm run build"
   },
   "repository": {
