@@ -83,9 +83,10 @@ const Person = props => {
             Contact
           </summary>
           <span>
-            Phone: {p.phone_number}
-            <br />
-            E-Mail: {p.email_address}
+            <strong>Phone</strong> <br />{' '}
+            {p.person_phone ? p.person_phone : p.party_phone} <br />
+            <strong>Email</strong> <br />{' '}
+            {p.person_email ? p.person_email : p.party_email}
           </span>
         </details>
       </div>

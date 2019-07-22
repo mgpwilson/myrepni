@@ -23,7 +23,6 @@ const Header = props => {
         align-items: center;
         justify-content: center;
         height: 100vh;
-        padding-top: 3rem;
       `}
     >
       <Title />

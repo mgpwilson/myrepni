@@ -39,16 +39,14 @@ const PersonList = props => {
           justify-content: center;
         `}
       >
-        {people.map(person => {
-          if (person.position === position) {
-            return (
-              <Person
-                key={`${person.forename}_${person.surname}`}
-                person={person}
-              />
-            );
-          }
-        })}
+        {people
+          .filter(person => person.position === position)
+          .map(person => (
+            <Person
+              key={`${person.forename}_${person.surname}`}
+              person={person}
+            />
+          ))}
       </div>
     </div>
   );

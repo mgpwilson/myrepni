@@ -4,6 +4,7 @@ import { css } from 'emotion';
 
 import Header from './Header';
 import Results from './Results';
+import Footer from './Footer';
 
 const App = () => {
   const [postcode, setPostcode] = useState(''),
@@ -62,9 +63,10 @@ const App = () => {
   };
 
   const getPeople = constituency => {
-    fetch(`/api/person/${constituency}`)
+    fetch(`/api/people/${constituency}`)
       .then(res => res.json())
       .then(people => {
+        console.log(people);
         setPeople(people);
         setResultsVisible(true);
         handleScrollToResults();
@@ -93,13 +95,16 @@ const App = () => {
 
       {/* Display results container */}
       {resultsVisible && (
-        <Results
-          people={people}
-          constituency={constituency}
-          scrollRef={scrollRef}
-          resultsVisible={resultsVisible}
-        />
+        <div>
+          <Results
+            people={people}
+            constituency={constituency}
+            scrollRef={scrollRef}
+            resultsVisible={resultsVisible}
+          />
+        </div>
       )}
+      <Footer />
     </div>
   );
 };

@@ -13,8 +13,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/constituency', require('./api/constituency'));
-app.use('/api/person', require('./api/person'));
+app.use('/api/constituency', require('./api/getConstituency'));
+app.use('/api/people', require('./api/getPeople'));
 
 if (ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
