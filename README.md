@@ -1,2 +1,2 @@
 # full-stack-react-app
-A representative finder for Northern Ireland using React.js frontend, Express.js backend and PostgresSQL database.
+A representative finder for Northern Ireland using React frontend, Express backend and PostgreSQL database.
