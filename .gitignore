@@ -1,3 +1,6 @@
+# Production
+build.js
+
 # Logs
 logs
 *.log
@@ -86,6 +89,3 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
-
-# Elastic Beanstalk
-.elasticbeanstalk/
