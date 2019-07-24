@@ -19,7 +19,7 @@ const App = () => {
   const PRODUCTION = process.env.NODE_ENV === 'production';
   const SERVER = PRODUCTION
     ? 'https://6yg0z6ztre.execute-api.eu-west-1.amazonaws.com/dev/'
-    : 'http://localhost:5000';
+    : 'http://localhost:5000/';
 
   const handleInputChange = e => {
     setPostcode(e.target.value);
@@ -50,7 +50,7 @@ const App = () => {
   };
 
   const getConstituency = postcode => {
-    fetch(`${SERVER}/api/constituency/${postcode}`)
+    fetch(`${SERVER}api/constituency/${postcode}`)
       .then(res => res.json())
       .then(res => res['@graph'][1].constituencyGroupName)
       .then(res => {
@@ -62,7 +62,6 @@ const App = () => {
         getPeople(constituency);
       })
       .catch(err => {
-        console.log(err);
         showError('Postcode is either inactive or does not exist.');
       });
   };
