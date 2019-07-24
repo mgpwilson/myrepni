@@ -24,6 +24,21 @@ const Footer = () => {
         `}
       >
         Matthew Wilson
+      </a>{' '}
+      @{' '}
+      <a
+        href="https://github.com/unosquare"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={css`
+          color: #0288d1;
+          text-decoration: none;
+          :hover {
+            text-decoration: underline;
+          }
+        `}
+      >
+        Unosquare
       </a>
     </div>
   );
