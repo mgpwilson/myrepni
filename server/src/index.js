@@ -3,6 +3,7 @@ import path from 'path';
 import serverless from 'serverless-http';
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import db from './database';
 
@@ -10,6 +11,7 @@ const ENV = process.env.NODE_ENV;
 const PORT = process.env.PORT || 5000;
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -32,7 +34,11 @@ db.query('SELECT NOW()', (err, res) => {
   if (err.error) {
     return console.log(err.error);
   }
-  console.log(`PostgreSQL connected: ${res[0].now}.`);
+  console.log(
+    `PostgreSQL connected: ${process.env.AWS_DATABASE_URL} ${res[0].now}.`
+  );
 });
 
 export var handler = serverless(app);
+
+// user: mrbigwilson password: mrbigwilson

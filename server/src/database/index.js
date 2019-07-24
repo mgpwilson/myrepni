@@ -1,13 +1,16 @@
 import { Pool } from 'pg';
 
-const CONNECTION_STRING = process.env.DATABASE_URL;
-const SSL = process.env.NODE_ENV === 'production';
+const PRODUCTION = process.env.NODE_ENV === 'production';
+// const CONNECTION_STRING = PRODUCTION
+//   ? process.env.AWS_DATABASE_URL
+//   : process.env.DATABASE_URL;
+const CONNECTION_STRING = process.env.AWS_DATABASE_URL;
 
 class Database {
   constructor() {
     this._pool = new Pool({
       connectionString: CONNECTION_STRING,
-      ssl: SSL,
+      ssl: PRODUCTION,
     });
 
     this._pool.on('error', (err, client) => {

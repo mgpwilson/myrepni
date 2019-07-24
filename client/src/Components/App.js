@@ -16,6 +16,11 @@ const App = () => {
     [loaderVisible, setLoaderVisible] = useState(false),
     scrollRef = useRef(null);
 
+  const PRODUCTION = process.env.NODE_ENV === 'production';
+  const SERVER = PRODUCTION
+    ? 'https://6yg0z6ztre.execute-api.eu-west-1.amazonaws.com/dev/'
+    : 'http://localhost:5000';
+
   const handleInputChange = e => {
     setPostcode(e.target.value);
   };
@@ -45,7 +50,7 @@ const App = () => {
   };
 
   const getConstituency = postcode => {
-    fetch(`/api/constituency/${postcode}`)
+    fetch(`${SERVER}/api/constituency/${postcode}`)
       .then(res => res.json())
       .then(res => res['@graph'][1].constituencyGroupName)
       .then(res => {
@@ -63,10 +68,9 @@ const App = () => {
   };
 
   const getPeople = constituency => {
-    fetch(`/api/people/${constituency}`)
+    fetch(`${SERVER}/api/people/${constituency}`)
       .then(res => res.json())
       .then(people => {
-        console.log(people);
         setPeople(people);
         setResultsVisible(true);
         handleScrollToResults();

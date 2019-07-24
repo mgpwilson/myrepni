@@ -1,16 +1,15 @@
 # serverless.yml
 
-service: my-express-application
+service: myRepNIService
 
 provider:
   name: aws
-  runtime: nodejs6.10
-  stage: dev
+  runtime: nodejs10.x
   region: eu-west-1
 
 functions:
   app:
-    handler: index.handler
+    handler: build/index.handler
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
