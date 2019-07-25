@@ -4,7 +4,7 @@
   "description": "A representative finder for Northern Ireland using React.js frontend, Express.js backend and PostgresSQL database.",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon --exec babel-node src",
+    "dev": "nodemon --exec babel-node src",
     "build": "rmdir /s build && babel src -d build",
     "start": "node build"
   },
@@ -27,7 +27,8 @@
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.4",
     "concurrently": "^4.1.1",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "serverless-domain-manager": "^3.2.6"
   },
   "dependencies": {
     "aws-sdk": "^2.496.0",

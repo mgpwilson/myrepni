@@ -13,3 +13,14 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
+
+plugins:
+  - serverless-domain-manager
+
+custom:
+  customDomain:
+    domainName: api.myrepni.com
+    certificateName: 'myrepni.com'
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true

@@ -1,5 +1,4 @@
 import 'dotenv/config';
-import path from 'path';
 import serverless from 'serverless-http';
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -11,7 +10,11 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 const corsOptions = {
-  origin: 'http://myrepni.s3-website-eu-west-1.amazonaws.com',
+  origin: [
+    'http://localhost:3000',
+    'http://myrepni.com',
+    'https://myrepni.com',
+  ],
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
@@ -20,12 +23,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/api/constituency', require('./api/getConstituency'));
-app.use('/api/people', require('./api/getPeople'));
+app.use('/getConstituency', require('./api/getConstituency'));
+app.use('/getPeople', require('./api/getPeople'));
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}...`);
-  console.log(app.get('env'));
 });
 
 db.query('SELECT NOW()', (err, res) => {
@@ -38,5 +40,3 @@ db.query('SELECT NOW()', (err, res) => {
 });
 
 export var handler = serverless(app);
-
-// user: mrbigwilson password: mrbigwilson

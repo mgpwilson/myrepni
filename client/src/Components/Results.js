@@ -20,7 +20,6 @@ const Results = props => {
         background-color: #212121;
         padding: 1rem;
         color: #fafafa;
-        border-top: 1px solid black;
       `}
     >
       <span
